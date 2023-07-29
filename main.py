@@ -1,4 +1,3 @@
-
 import matplotlib.pyplot as plt
 import PySimpleGUI as gui
 
@@ -73,11 +72,13 @@ while True:
     event, values = app.read()#get events for the window
     if event == gui.WIN_CLOSED:#close the window if the user clicks the X button
         break
+
     #if the user clicks the button  "Load Data"
     if event == 'Load Data':
         load_data()
         is_loaded = True
         app['Plot Data'].update(button_color=("green", "white"))
+
     #if the user clicks the button  "Plot Data"
     if event == 'Plot Data':
         if is_loaded:
