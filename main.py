@@ -1,10 +1,26 @@
-'''
-import PySimpleGUI as sg
-
-sg.Window(title="", layout=[[]], margins=(100, 50)).read()
-'''
 
 import matplotlib.pyplot as plt
+import PySimpleGUI as gui
+
+WINDOW_TITLE = "Spectrum Analyzer"
+
+#gui attributes
+gui.theme('DarkAmber')
+
+layout = [  [gui.Text('Demo')],
+            [gui.Button('Load Data')], 
+            [gui.Button('Plot Data')]   ]
+
+#create a window
+app = gui.Window(title=WINDOW_TITLE, layout=layout, finalize=True)
+
+while True:
+    event, values = app.read()
+    if event == gui.WIN_CLOSED:
+        break
+    print('You entered ', values[0])
+
+app.close()
 
 # Import data from file
 #open file
