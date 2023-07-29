@@ -5,11 +5,10 @@ pip install plotly
 pip install pandas
 pip install PySimpleGUI
 
-~Documendations
+~Documentations
 -PySimpleGUI:
     https://www.pysimplegui.org/en/stable/
 
 -matplotlib:
     https://matplotlib.org/stable/index.html
 
-    
