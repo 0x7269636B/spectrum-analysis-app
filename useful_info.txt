@@ -1,0 +1,15 @@
+~Download Dependencies
+pip install matplotlib
+pip install mpl-interactions
+pip install plotly
+pip install pandas
+pip install PySimpleGUI
+
+~Documendations
+-PySimpleGUI:
+    https://www.pysimplegui.org/en/stable/
+
+-matplotlib:
+    https://matplotlib.org/stable/index.html
+
+    
