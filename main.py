@@ -1,12 +1,14 @@
 import matplotlib.pyplot as plt
 import PySimpleGUI as gui
+import time
 
 WINDOW_TITLE = "Spectrum Analyzer"
-WIDTH = 800
-HEIGHT = 600
+WIDTH = 1200
+HEIGHT = 800
 
 def load_data():
     global counter, x, y
+    start = time.time()
     print("Loading data...")
     #Import data from file
     #open file
@@ -27,18 +29,23 @@ def load_data():
         y.append(y_axis)
         counter += 1
     print("Data loaded.")
+    stop = time.time() 
+    print(f"Time elapsed loading data: {stop - start:0.4f} secs")
     
 def plot_data():
+    start = time.time()
     print("Plotting data...")
     # Create the plot
-    plt.plot(x, y, color='green', linestyle='dashed', linewidth = 1)
-    plt.xlabel('X-axis')
-    plt.ylabel('Y-axis')
+    plt.plot(x, y, ls='-', ms=4, color='green', linewidth = 1)
+    plt.xlabel('Frequency')
+    plt.ylabel('Amplitude')
     plt.title('Zoom In Chart Example')
 
     # Set the initial limits of the plot
     plt.xlim(0, counter+1000)
     plt.ylim(0, 2000)
+
+    stop = time.time()
 
     # Show the initial plot
     plt.show()
@@ -54,6 +61,8 @@ def plot_data():
     # Show the zoomed plot
     plt.show()
     print("Data plotted.")
+    
+    print(f"Time elapsed plotting data: {stop - start:0.4f} secs")
 
 #gui attributes
 gui.theme('DarkAmber')
