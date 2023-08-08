@@ -21,7 +21,6 @@ def load_data():
     Lines = file.readlines()
 
     for line in Lines:
-        print(file.readline() != "")
         index = 0
         x_axis = [line.split(",")[index]]
         x_axis = [int(item.replace("\n", "")) for item in x_axis]
