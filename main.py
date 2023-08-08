@@ -7,8 +7,8 @@ WIDTH = 1200
 HEIGHT = 800
 
 def load_data():
-    global counter, x, y
-    start = time.time()
+    global counter, x, y, start
+    
     print("Loading data...")
     #Import data from file
     #open file
@@ -17,8 +17,11 @@ def load_data():
     counter = 0
     x = []
     y = []
-    while file.readline() != "":
-        line = file.readline()
+
+    Lines = file.readlines()
+
+    for line in Lines:
+        print(file.readline() != "")
         index = 0
         x_axis = [line.split(",")[index]]
         x_axis = [int(item.replace("\n", "")) for item in x_axis]
@@ -28,14 +31,13 @@ def load_data():
         x.append(x_axis)
         y.append(y_axis)
         counter += 1
-    print("Data loaded.")
-    stop = time.time() 
-    print(f"Time elapsed loading data: {stop - start:0.4f} secs")
-    
+    print("Data loaded. Data size:" +str(counter))
+      
 def plot_data():
-    start = time.time()
+
     print("Plotting data...")
     # Create the plot
+    start = time.time()
     plt.plot(x, y, ls='-', ms=4, color='green', linewidth = 1)
     plt.xlabel('Frequency')
     plt.ylabel('Amplitude')
@@ -45,7 +47,9 @@ def plot_data():
     plt.xlim(0, counter+1000)
     plt.ylim(0, 2000)
 
-    stop = time.time()
+    stop = time.time() 
+    print(f"Time elapsed plotting data: {stop - start:0.4f} secs")
+
 
     # Show the initial plot
     plt.show()
@@ -61,11 +65,9 @@ def plot_data():
     # Show the zoomed plot
     plt.show()
     print("Data plotted.")
-    
-    print(f"Time elapsed plotting data: {stop - start:0.4f} secs")
 
 #gui attributes
-gui.theme('DarkAmber')
+#gui.theme('DarkAmber')
 
 layout = [  [gui.Text('Demo')],
             [gui.Button('Load Data')], 
@@ -84,14 +86,18 @@ while True:
 
     #if the user clicks the button  "Load Data"
     if event == 'Load Data':
+        start = time.time()
         load_data()
         is_loaded = True
         app['Plot Data'].update(button_color=("green", "white"))
+        stop = time.time() 
+        print(f"Time elapsed loading data: {stop - start:0.4f} secs")
 
     #if the user clicks the button  "Plot Data"
     if event == 'Plot Data':
         if is_loaded:
             plot_data()
+            
         else:
             print("Data not loaded.")
 
