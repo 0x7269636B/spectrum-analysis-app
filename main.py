@@ -3,8 +3,8 @@ import PySimpleGUI as gui
 import time
 
 WINDOW_TITLE = "Spectrum Analyzer"
-WIDTH = 1200
-HEIGHT = 800
+WIDTH = 1200#window width
+HEIGHT = 800#window height
 
 def load_data():
     global counter, x, y, start
@@ -12,7 +12,7 @@ def load_data():
     print("Loading data...")
     #Import data from file
     #open file
-    file = open("random.txt", "r")
+    file = open("spectrum.txt", "r")
 
     counter = 0
     x = []
@@ -23,10 +23,10 @@ def load_data():
     for line in Lines:
         index = 0
         x_axis = [line.split(",")[index]]
-        x_axis = [int(item.replace("\n", "")) for item in x_axis]
+        x_axis = [float(item.replace("\n", "")) for item in x_axis]
         index = 1
         y_axis = [line.split(",")[index]]
-        y_axis = [int(item.replace("\n", "")) for item in y_axis]
+        y_axis = [float(item.replace("\n", "")) for item in y_axis]
         x.append(x_axis)
         y.append(y_axis)
         counter += 1
@@ -43,8 +43,8 @@ def plot_data():
     plt.title('Zoom In Chart Example')
 
     # Set the initial limits of the plot
-    plt.xlim(0, counter+1000)
-    plt.ylim(0, 2000)
+    #plt.xlim(0, counter)
+    #plt.ylim(0, 2000)
 
     stop = time.time() 
     print(f"Time elapsed plotting data: {stop - start:0.4f} secs")
@@ -64,9 +64,6 @@ def plot_data():
     # Show the zoomed plot
     plt.show()
     print("Data plotted.")
-
-#gui attributes
-#gui.theme('DarkAmber')
 
 layout = [  [gui.Text('Demo')],
             [gui.Button('Load Data')], 
@@ -88,6 +85,9 @@ while True:
         if event == 'Load Data':
             start = time.time()
             load_data()
+            ##############
+            print(y)
+            ##############
             is_loaded = True
             app['Plot Data'].update(button_color=("green", "white"))
             stop = time.time() 
