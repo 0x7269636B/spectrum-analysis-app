@@ -12,7 +12,7 @@ def load_data():
     print("Loading data...")
     #Import data from file
     #open file
-    file = open("spectrum.txt", "r")
+    file = open("spectrum.csv", "r")
 
     counter = 0
     x = []
@@ -41,10 +41,6 @@ def plot_data():
     plt.xlabel('Frequency')
     plt.ylabel('Amplitude')
     plt.title('Zoom In Chart Example')
-
-    # Set the initial limits of the plot
-    #plt.xlim(0, counter)
-    #plt.ylim(0, 2000)
 
     stop = time.time() 
     print(f"Time elapsed plotting data: {stop - start:0.4f} secs")
@@ -85,9 +81,6 @@ while True:
         if event == 'Load Data':
             start = time.time()
             load_data()
-            ##############
-            print(y)
-            ##############
             is_loaded = True
             app['Plot Data'].update(button_color=("green", "white"))
             stop = time.time() 
