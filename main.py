@@ -3,16 +3,16 @@ import PySimpleGUI as gui
 import time
 
 WINDOW_TITLE = "Spectrum Analyzer"
-WIDTH = 1200#window width
-HEIGHT = 800#window height
+WIDTH = 600#window width
+HEIGHT = 200#window height
 
-def load_data():
+def load_data(filename):
     global counter, x, y, start
     
     print("Loading data...")
     #Import data from file
     #open file
-    file = open("spectrum.csv", "r")
+    file = open(filename, "r")
 
     counter = 0
     x = []
@@ -59,7 +59,6 @@ def plot_data():
     print("Data plotted.")
 
 layout = [  [gui.Text('Select File To Load!'), gui.InputText(key="-FILE-"), gui.FileBrowse()],
-            [gui.Button("Open")],
             [gui.Button('Load Data')], 
             [gui.Button('Plot Data', button_color=("red", "white"))]   ]
 
@@ -71,14 +70,17 @@ is_loaded = False
 #main app functionality
 while True:
     try:
+
         event, values = app.read()#get events for the window
+        fn = values["-FILE-"]
+
         if event == gui.WIN_CLOSED:#close the window if the user clicks the X button
             break
 
         #if the user clicks the button  "Load Data"
         if event == 'Load Data':
             start = time.time()
-            load_data()
+            load_data(filename=fn)
             is_loaded = True
             app['Plot Data'].update(button_color=("green", "white"))
             stop = time.time() 
