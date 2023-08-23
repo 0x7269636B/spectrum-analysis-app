@@ -45,7 +45,6 @@ def plot_data():
     stop = time.time() 
     print(f"Time elapsed plotting data: {stop - start:0.4f} secs")
 
-
     # Show the initial plot
     plt.show()
 
@@ -57,11 +56,10 @@ def plot_data():
     plt.xlim(zoomed_x_range)
     plt.ylim(zoomed_y_range)
 
-    # Show the zoomed plot
-    plt.show()
     print("Data plotted.")
 
-layout = [  [gui.Text('Demo')],
+layout = [  [gui.Text('Select File To Load!'), gui.InputText(key="-FILE-"), gui.FileBrowse()],
+            [gui.Button("Open")],
             [gui.Button('Load Data')], 
             [gui.Button('Plot Data', button_color=("red", "white"))]   ]
 
@@ -73,18 +71,21 @@ is_loaded = False
 #main app functionality
 while True:
     try:
+
+        start = time.time()
+        load_data()
+        is_loaded = True
+        app['Plot Data'].update(button_color=("green", "white"))
+        stop = time.time() 
+        print(f"Time elapsed loading data: {stop - start:0.4f} secs")
+
         event, values = app.read()#get events for the window
         if event == gui.WIN_CLOSED:#close the window if the user clicks the X button
             break
 
         #if the user clicks the button  "Load Data"
         if event == 'Load Data':
-            start = time.time()
-            load_data()
-            is_loaded = True
-            app['Plot Data'].update(button_color=("green", "white"))
-            stop = time.time() 
-            print(f"Time elapsed loading data: {stop - start:0.4f} secs")
+            pass
 
         #if the user clicks the button  "Plot Data"
         if event == 'Plot Data':
