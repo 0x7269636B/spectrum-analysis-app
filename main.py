@@ -58,9 +58,11 @@ def plot_data():
 
     print("Data plotted.")
 
+gui.theme("Dark Blue 1")
+
 layout = [  [gui.Text('Select File To Load!'), gui.InputText(key="-FILE-"), gui.FileBrowse()],
             [gui.Button('Load Data')], 
-            [gui.Button('Plot Data', button_color=("red", "white"))]   ]
+            [gui.Button('Plot Data', button_color=("white", "red"))]   ]
 
 #create a window
 app = gui.Window(title=WINDOW_TITLE, layout=layout, finalize=True, size=(WIDTH,HEIGHT))
@@ -79,12 +81,15 @@ while True:
 
         #if the user clicks the button  "Load Data"
         if event == 'Load Data':
-            start = time.time()
-            load_data(filename=fn)
-            is_loaded = True
-            app['Plot Data'].update(button_color=("green", "white"))
-            stop = time.time() 
-            print(f"Time elapsed loading data: {stop - start:0.4f} secs")
+            try:
+                start = time.time()
+                load_data(filename=fn)
+                is_loaded = True
+                app['Plot Data'].update(button_color=("white", "green"))
+                stop = time.time() 
+                print(f"Time elapsed loading data: {stop - start:0.4f} secs")
+            except FileNotFoundError:
+                print("File not found")
 
         #if the user clicks the button  "Plot Data"
         if event == 'Plot Data':
