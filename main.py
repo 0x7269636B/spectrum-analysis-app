@@ -60,46 +60,54 @@ def plot_data():
 
 gui.theme("Dark Blue 1")
 
-layout = [  [gui.Text('Select File To Load!'), gui.InputText(key="-FILE-"), gui.FileBrowse()],
-            [gui.Button('Load Data')], 
-            [gui.Button('Plot Data', button_color=("white", "red"))]   ]
+layout = [  [gui.Text('Source Data:'), gui.InputText(key="-FILE-"),gui.FileBrowse()],
+            [gui.Button('Load Data'),  gui.Button('Plot Data', button_color=("white", "red")) ]   ]
 
 #create a window
 app = gui.Window(title=WINDOW_TITLE, layout=layout, finalize=True, size=(WIDTH,HEIGHT))
 
-is_loaded = False
+def main():
 
-#main app functionality
-while True:
-    try:
+    is_loaded = False
+    fn = ""
 
-        event, values = app.read()#get events for the window
-        fn = values["-FILE-"]
+    #main app functionality
+    while True:
+        try:
 
-        if event == gui.WIN_CLOSED:#close the window if the user clicks the X button
+            event, values = app.read()#get events for the window
+
+            if event == gui.WIN_CLOSED:#close the window if the user clicks the X button
+                break
+
+            #if the user clicks the button  "Load Data"
+            if event == 'Load Data':
+                try:
+                    fn = values["-FILE-"]
+                    gui.popup(f"Selected file: {fn}")
+                    start = time.time()
+                    load_data(filename=fn)
+                    is_loaded = True
+                    app['Plot Data'].update(button_color=("white", "green"))
+                    stop = time.time() 
+                    print(f"Time elapsed loading data: {stop - start:0.4f} secs")
+                except FileNotFoundError:
+                    print("File not found")
+
+            #if the user clicks the button  "Plot Data"
+            if event == 'Plot Data':
+                if is_loaded:
+                    plot_data()
+                    print("File Loaded:", values["-FILE-"])
+                    
+                else:
+                    print("Data not loaded.")
+
+        except KeyboardInterrupt:
+            print("\nKeyboard Interrupt\n")
             break
 
-        #if the user clicks the button  "Load Data"
-        if event == 'Load Data':
-            try:
-                start = time.time()
-                load_data(filename=fn)
-                is_loaded = True
-                app['Plot Data'].update(button_color=("white", "green"))
-                stop = time.time() 
-                print(f"Time elapsed loading data: {stop - start:0.4f} secs")
-            except FileNotFoundError:
-                print("File not found")
+    app.close()
 
-        #if the user clicks the button  "Plot Data"
-        if event == 'Plot Data':
-            if is_loaded:
-                plot_data()
-                
-            else:
-                print("Data not loaded.")
-    except KeyboardInterrupt:
-        print("\nKeyboard Interrupt\n")
-        break
-
-app.close()
+if __name__ == "__main__":
+    main()
