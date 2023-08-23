@@ -71,21 +71,18 @@ is_loaded = False
 #main app functionality
 while True:
     try:
-
-        start = time.time()
-        load_data()
-        is_loaded = True
-        app['Plot Data'].update(button_color=("green", "white"))
-        stop = time.time() 
-        print(f"Time elapsed loading data: {stop - start:0.4f} secs")
-
         event, values = app.read()#get events for the window
         if event == gui.WIN_CLOSED:#close the window if the user clicks the X button
             break
 
         #if the user clicks the button  "Load Data"
         if event == 'Load Data':
-            pass
+            start = time.time()
+            load_data()
+            is_loaded = True
+            app['Plot Data'].update(button_color=("green", "white"))
+            stop = time.time() 
+            print(f"Time elapsed loading data: {stop - start:0.4f} secs")
 
         #if the user clicks the button  "Plot Data"
         if event == 'Plot Data':
